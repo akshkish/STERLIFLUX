@@ -10,3 +10,4 @@ Werkzeug
 gunicorn
 sentence-transformers
 torch==2.9.1+cpu
+faiss-cpu

@@ -1,0 +1,11 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+pandas
+numpy
+scikit-learn
+plotly
+requests
+sentence-transformers
+Werkzeug
+gunicorn

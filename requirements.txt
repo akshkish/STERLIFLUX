@@ -9,4 +9,4 @@ requests
 Werkzeug
 gunicorn
 sentence-transformers
-torch==2.8.0+cpu
+torch==2.9.1+cpu

@@ -1,0 +1,895 @@
+/* =========================================================
+STERLIFLUX UI POLISH
+LIGHT: White + Burgundy + Soft 3D
+DARK : Black + Neon Red + Subtle Glow
+
+This file is an enhancement layer.
+Existing application CSS remains unchanged.
+========================================================= */
+
+/* =========================================================
+THEME VARIABLES
+========================================================= */
+
+:root {
+--sf-bg: #f4f7fb;
+--sf-card: #ffffff;
+--sf-card-soft: #fafafa;
+
+
+--sf-text: #222222;
+--sf-muted: #666666;
+
+--sf-border: #e1c4ca;
+--sf-border-strong: #7f1734;
+
+--sf-accent: #7f1734;
+--sf-accent-dark: #5f1027;
+
+--sf-shadow:
+    0 4px 10px rgba(85, 20, 35, 0.10),
+    0 10px 24px rgba(85, 20, 35, 0.08);
+
+--sf-hover-shadow:
+    0 7px 14px rgba(85, 20, 35, 0.14),
+    0 15px 30px rgba(85, 20, 35, 0.10);
+
+
+}
+
+/* =========================================================
+DARK THEME
+========================================================= */
+
+html[data-sf-theme="dark"] {
+
+
+--sf-bg: #090909;
+--sf-card: #151515;
+--sf-card-soft: #191919;
+
+--sf-text: #f2f2f2;
+--sf-muted: #a8a8a8;
+
+--sf-border: #ff3030;
+--sf-border-strong: #ff2020;
+
+--sf-accent: #ff2020;
+--sf-accent-dark: #ff4040;
+
+--sf-shadow:
+    0 0 5px rgba(255, 25, 25, 0.15),
+    0 8px 22px rgba(0, 0, 0, 0.55);
+
+--sf-hover-shadow:
+    0 0 8px rgba(255, 25, 25, 0.35),
+    0 0 22px rgba(255, 25, 25, 0.18),
+    0 12px 30px rgba(0, 0, 0, 0.60);
+
+
+}
+
+/* =========================================================
+GLOBAL DARK BACKGROUND
+========================================================= */
+
+html[data-sf-theme="dark"] body {
+background: var(--sf-bg) !important;
+color: var(--sf-text) !important;
+}
+
+/* =========================================================
+EXISTING MAIN CONTAINERS
+========================================================= */
+
+html[data-sf-theme="dark"] .box,
+html[data-sf-theme="dark"] .card,
+html[data-sf-theme="dark"] .section,
+html[data-sf-theme="dark"] .prediction,
+html[data-sf-theme="dark"] .info,
+html[data-sf-theme="dark"] .inflation-box,
+html[data-sf-theme="dark"] .health-box,
+html[data-sf-theme="dark"] .insight,
+html[data-sf-theme="dark"] .profile-dropdown {
+
+
+background: var(--sf-card) !important;
+color: var(--sf-text) !important;
+
+border-color: var(--sf-border) !important;
+
+box-shadow: var(--sf-shadow) !important;
+
+}
+
+/* =========================================================
+LIGHT MODE — BURGUNDY 3D BOX EFFECT
+========================================================= */
+
+html:not([data-sf-theme="dark"]) .box,
+html:not([data-sf-theme="dark"]) .card,
+html:not([data-sf-theme="dark"]) .section,
+html:not([data-sf-theme="dark"]) .forecast-card,
+html:not([data-sf-theme="dark"]) .long-card,
+html:not([data-sf-theme="dark"]) .inflation-card,
+html:not([data-sf-theme="dark"]) .inflation-box,
+html:not([data-sf-theme="dark"]) .health-box,
+html:not([data-sf-theme="dark"]) .insight {
+
+
+border: 1px solid var(--sf-border);
+
+box-shadow: var(--sf-shadow);
+
+transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+
+
+}
+
+/* =========================================================
+LIGHT MODE — HOVER
+========================================================= */
+
+html:not([data-sf-theme="dark"]) .card:hover,
+html:not([data-sf-theme="dark"]) .forecast-card:hover,
+html:not([data-sf-theme="dark"]) .long-card:hover,
+html:not([data-sf-theme="dark"]) .inflation-card:hover {
+
+
+transform: translateY(-3px);
+
+border-color: var(--sf-border-strong);
+
+box-shadow: var(--sf-hover-shadow);
+
+
+}
+
+/* =========================================================
+LIGHT MODE — UPLOAD BOX
+========================================================= */
+
+html:not([data-sf-theme="dark"]) .box {
+
+
+border: 1px solid #d8aeb8;
+
+box-shadow:
+    0 5px 0 #ead5d9,
+    0 10px 25px rgba(85, 20, 35, 0.10);
+
+
+}
+
+/* =========================================================
+LIGHT MODE — PREDICTION BOX
+========================================================= */
+
+html:not([data-sf-theme="dark"]) .prediction {
+
+
+border: 1px solid #7f1734;
+
+box-shadow:
+    0 5px 0 #ead5d9,
+    0 12px 28px rgba(85, 20, 35, 0.15);
+
+
+}
+
+/* =========================================================
+DARK MODE — CARD EFFECT
+========================================================= */
+
+html[data-sf-theme="dark"] .card,
+html[data-sf-theme="dark"] .section,
+html[data-sf-theme="dark"] .forecast-card,
+html[data-sf-theme="dark"] .long-card,
+html[data-sf-theme="dark"] .inflation-card,
+html[data-sf-theme="dark"] .inflation-box,
+html[data-sf-theme="dark"] .health-box,
+html[data-sf-theme="dark"] .insight,
+html[data-sf-theme="dark"] .box {
+
+
+border: 1px solid rgba(255, 35, 35, 0.55);
+
+box-shadow: var(--sf-shadow);
+
+transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease;
+
+
+}
+
+/* =========================================================
+DARK MODE — HOVER GLOW
+========================================================= */
+
+html[data-sf-theme="dark"] .card:hover,
+html[data-sf-theme="dark"] .forecast-card:hover,
+html[data-sf-theme="dark"] .long-card:hover,
+html[data-sf-theme="dark"] .inflation-card:hover {
+
+
+transform: translateY(-3px);
+
+border-color: #ff2020;
+
+box-shadow: var(--sf-hover-shadow);
+
+
+}
+
+/* =========================================================
+DARK MODE — PREDICTION
+========================================================= */
+
+html[data-sf-theme="dark"] .prediction {
+
+
+border: 1px solid #ff2020 !important;
+
+box-shadow:
+    0 0 7px rgba(255, 25, 25, 0.30),
+    0 0 25px rgba(255, 25, 25, 0.12),
+    0 12px 30px rgba(0, 0, 0, 0.60) !important;
+
+
+}
+
+/* =========================================================
+DARK MODE — UPLOAD BOX
+========================================================= */
+
+html[data-sf-theme="dark"] .box {
+
+border-color: rgba(255, 30, 30, 0.70);
+
+box-shadow:
+    0 0 6px rgba(255, 25, 25, 0.18),
+    0 10px 28px rgba(0, 0, 0, 0.55);
+
+
+}
+
+/* =========================================================
+TEXT
+========================================================= */
+
+html[data-sf-theme="dark"] p,
+html[data-sf-theme="dark"] span,
+html[data-sf-theme="dark"] label,
+html[data-sf-theme="dark"] h1,
+html[data-sf-theme="dark"] h2,
+html[data-sf-theme="dark"] h3,
+html[data-sf-theme="dark"] h4,
+html[data-sf-theme="dark"] strong {
+
+
+color: inherit;
+
+
+}
+
+html[data-sf-theme="dark"] .subtitle,
+html[data-sf-theme="dark"] .info,
+html[data-sf-theme="dark"] .dropdown-email,
+html[data-sf-theme="dark"] .profile-detail strong {
+
+
+color: var(--sf-muted) !important;
+
+
+}
+
+/* =========================================================
+DARK MODE — INPUTS
+========================================================= */
+
+html[data-sf-theme="dark"] input,
+html[data-sf-theme="dark"] textarea,
+html[data-sf-theme="dark"] select {
+
+background: #202020 !important;
+
+color: #f5f5f5 !important;
+
+border-color: #444 !important;
+
+
+}
+
+html[data-sf-theme="dark"] input:focus,
+html[data-sf-theme="dark"] textarea:focus,
+html[data-sf-theme="dark"] select:focus {
+
+
+border-color: #ff2020 !important;
+
+outline: none;
+
+box-shadow:
+    0 0 0 2px rgba(255, 30, 30, 0.12),
+    0 0 8px rgba(255, 30, 30, 0.20);
+
+
+}
+
+html[data-sf-theme="dark"] input::placeholder,
+html[data-sf-theme="dark"] textarea::placeholder {
+
+
+color: #888;
+
+
+}
+
+/* =========================================================
+BUTTONS
+========================================================= */
+
+html[data-sf-theme="dark"] button.analyze-button,
+html[data-sf-theme="dark"] .upload-button {
+
+
+background: #e60000 !important;
+
+color: white !important;
+
+border: 1px solid #ff3030 !important;
+
+box-shadow:
+    0 0 7px rgba(255, 25, 25, 0.20);
+
+
+}
+
+html[data-sf-theme="dark"] button.analyze-button:hover,
+html[data-sf-theme="dark"] .upload-button:hover {
+
+
+background: #ff2020 !important;
+
+box-shadow:
+    0 0 8px rgba(255, 25, 25, 0.45),
+    0 0 20px rgba(255, 25, 25, 0.18);
+
+
+}
+
+/* =========================================================
+LIGHT MODE BUTTON ACCENT
+========================================================= */
+
+html:not([data-sf-theme="dark"]) button.analyze-button {
+
+
+background: #111 !important;
+
+border: 1px solid #7f1734;
+
+box-shadow:
+    0 3px 0 #ead5d9;
+
+
+}
+
+html:not([data-sf-theme="dark"]) button.analyze-button:hover {
+
+
+background: #5f1027 !important;
+
+box-shadow:
+    0 4px 0 #d8aeb8,
+    0 8px 18px rgba(85, 20, 35, 0.15);
+
+
+}
+
+/* =========================================================
+PROFILE DROPDOWN
+========================================================= */
+
+html:not([data-sf-theme="dark"]) .profile-dropdown {
+
+
+border: 1px solid #d8aeb8;
+
+
+}
+
+html[data-sf-theme="dark"] .profile-dropdown {
+
+
+border: 1px solid rgba(255, 30, 30, 0.60);
+
+box-shadow:
+    0 0 8px rgba(255, 25, 25, 0.20),
+    0 15px 35px rgba(0, 0, 0, 0.65) !important;
+
+
+}
+
+html[data-sf-theme="dark"] .profile-detail,
+html[data-sf-theme="dark"] .logout-section {
+
+
+border-color: #333 !important;
+
+
+}
+
+/* =========================================================
+LOGOUT
+========================================================= */
+
+html[data-sf-theme="dark"] .logout:hover {
+
+
+background: rgba(255, 30, 30, 0.10) !important;
+
+
+}
+
+/* =========================================================
+THEME TOGGLE
+========================================================= */
+
+.sf-theme-toggle {
+
+
+display: flex;
+
+align-items: center;
+
+gap: 8px;
+
+margin-right: 14px;
+
+
+}
+
+.sf-theme-label {
+
+
+font-size: 13px;
+
+color: inherit;
+
+opacity: 0.9;
+
+
+}
+
+.sf-switch {
+
+
+position: relative;
+
+width: 50px;
+
+height: 26px;
+
+display: inline-block;
+
+
+}
+
+.sf-switch input {
+
+
+opacity: 0;
+
+width: 0;
+
+height: 0;
+
+
+}
+
+.sf-slider {
+
+
+position: absolute;
+
+inset: 0;
+
+cursor: pointer;
+
+background: #111;
+
+border: 1px solid #7f1734;
+
+border-radius: 30px;
+
+transition: 0.25s ease;
+
+
+}
+
+.sf-slider::before {
+
+
+content: "☀";
+
+position: absolute;
+
+width: 20px;
+
+height: 20px;
+
+left: 2px;
+
+top: 2px;
+
+border-radius: 50%;
+
+background: white;
+
+color: #7f1734;
+
+font-size: 12px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+transition: 0.25s ease;
+
+
+}
+
+.sf-switch input:checked + .sf-slider {
+
+
+background: #1a1a1a;
+
+border-color: #ff2020;
+
+box-shadow:
+    0 0 6px rgba(255, 25, 25, 0.35);
+
+
+}
+
+.sf-switch input:checked + .sf-slider::before {
+
+
+transform: translateX(24px);
+
+content: "☾";
+
+background: #ff2020;
+
+color: #111;
+
+box-shadow:
+    0 0 6px rgba(255, 25, 25, 0.45);
+
+
+}
+
+/* =========================================================
+CSV TEMPLATE SECTION
+========================================================= */
+
+.sf-template-section {
+
+
+margin-top: 22px;
+
+padding: 22px;
+
+border: 1px solid #d8aeb8;
+
+border-radius: 12px;
+
+background: #fafafa;
+
+text-align: left;
+
+box-shadow:
+    0 3px 0 #ead5d9,
+    0 7px 18px rgba(85, 20, 35, 0.07);
+
+
+}
+
+html[data-sf-theme="dark"] .sf-template-section {
+
+
+background: #151515;
+
+border-color: rgba(255, 30, 30, 0.60);
+
+box-shadow:
+    0 0 6px rgba(255, 25, 25, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.50);
+
+
+}
+
+.sf-template-title {
+
+
+margin: 0 0 7px;
+
+font-size: 18px;
+
+font-weight: bold;
+
+
+}
+
+.sf-template-description {
+
+
+margin: 0 0 15px;
+
+color: #666;
+
+font-size: 14px;
+
+line-height: 1.5;
+
+
+}
+
+html[data-sf-theme="dark"] .sf-template-description {
+
+
+color: #aaa;
+
+
+}
+
+.sf-template-buttons {
+
+
+display: flex;
+
+flex-wrap: wrap;
+
+gap: 10px;
+
+
+}
+
+.sf-download-btn {
+
+
+display: inline-flex;
+
+align-items: center;
+
+justify-content: center;
+
+gap: 7px;
+
+padding: 10px 15px;
+
+border-radius: 8px;
+
+background: #111;
+
+color: white !important;
+
+text-decoration: none;
+
+font-size: 13px;
+
+font-weight: bold;
+
+border: 1px solid #7f1734;
+
+transition: 0.2s ease;
+
+
+}
+
+.sf-download-btn:hover {
+
+
+background: #5f1027;
+
+transform: translateY(-2px);
+
+box-shadow:
+    0 5px 12px rgba(85, 20, 35, 0.15);
+
+
+}
+
+html[data-sf-theme="dark"] .sf-download-btn {
+
+
+background: #e60000;
+
+color: white !important;
+
+border-color: #ff3030;
+
+box-shadow:
+    0 0 5px rgba(255, 25, 25, 0.20);
+
+
+}
+
+html[data-sf-theme="dark"] .sf-download-btn:hover {
+
+
+background: #ff2020;
+
+box-shadow:
+    0 0 8px rgba(255, 25, 25, 0.45),
+    0 0 18px rgba(255, 25, 25, 0.18);
+
+
+}
+
+.sf-template-note {
+
+
+margin-top: 14px;
+
+font-size: 12px;
+
+color: #777;
+
+line-height: 1.5;
+
+
+}
+
+html[data-sf-theme="dark"] .sf-template-note {
+
+
+color: #999;
+
+
+}
+
+/* =========================================================
+UPLOAD LOADING STATE
+========================================================= */
+
+.sf-analyzing {
+
+
+pointer-events: none;
+
+opacity: 0.75;
+
+
+}
+
+.sf-spinner {
+
+
+display: inline-block;
+
+width: 16px;
+
+height: 16px;
+
+border: 2px solid currentColor;
+
+border-right-color: transparent;
+
+border-radius: 50%;
+
+animation: sf-spin 0.7s linear infinite;
+
+vertical-align: -3px;
+
+margin-right: 7px;
+
+
+}
+
+@keyframes sf-spin {
+
+
+to {
+    transform: rotate(360deg);
+}
+
+
+}
+
+/* =========================================================
+DARK MODE — LINKS
+========================================================= */
+
+html[data-sf-theme="dark"] a {
+
+
+color: #ff5555;
+
+
+}
+
+html[data-sf-theme="dark"] a:hover {
+
+
+color: #ff8888;
+
+
+}
+
+/* =========================================================
+CHART CONTAINERS
+========================================================= */
+
+html[data-sf-theme="dark"] .chart,
+html[data-sf-theme="dark"] .chart-container {
+
+
+border-radius: 12px;
+
+
+}
+
+/* =========================================================
+SMOOTH THEME TRANSITION
+========================================================= */
+
+body.sf-theme-transition,
+body.sf-theme-transition * {
+
+
+transition:
+    background-color 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease !important;
+
+
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+
+.sf-theme-toggle {
+
+    margin-right: 7px;
+}
+
+
+.sf-theme-label {
+
+    display: none;
+}
+
+
+.sf-template-section {
+
+    padding: 17px;
+}
+
+
+.sf-template-buttons {
+
+    flex-direction: column;
+}
+
+
+.sf-download-btn {
+
+    width: 100%;
+}
+
+
+}

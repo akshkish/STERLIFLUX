@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>SterliFlux - AI Engineered Personal Finance Advisor</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        header {
+            background: #111;
+            color: white;
+            padding: 18px 35px;
+            position: relative;
+            min-height: 105px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        header p {
+            color: #ccc;
+            margin: 6px 0 0;
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile-wrapper {
+            position: absolute;
+            right: 30px;
+            top: 18px;
+            z-index: 10000;
+        }
+
+        .profile-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            background: transparent;
+            border: none;
+            color: white;
+
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 10px;
+
+            font-size: 14px;
+        }
+
+        .profile-button:hover {
+            background: #222;
+        }
+
+        .profile-icon {
+            width: 44px;
+            height: 44px;
+
+            border-radius: 50%;
+
+            background: white;
+            color: #111;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .welcome-text {
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .welcome-label {
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .welcome-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+
+        /* PROFILE DROPDOWN */
+
+        .profile-dropdown {
+            position: absolute;
+            right: 0;
+            top: 58px;
+
+            width: 270px;
+
+            background: white;
+            color: #222;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 10px 35px rgba(0,0,0,0.25);
+
+            padding: 18px;
+
+            display: none;
+        }
+
+        .profile-dropdown.active {
+            display: block;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding-bottom: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-header-icon {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50%;
+
+            background: #111;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .profile-header-name {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .profile-header-email {
+            color: #777;
+            font-size: 12px;
+            margin-top: 3px;
+            word-break: break-word;
+        }
+
+        .profile-details {
+            padding: 14px 0;
+        }
+
+        .profile-detail {
+            display: flex;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin: 10px 0;
+
+            font-size: 13px;
+        }
+
+        .profile-detail-label {
+            color: #777;
+        }
+
+        .profile-detail-value {
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .logout-button {
+            display: block;
+
+            width: 100%;
+
+            text-align: center;
+
+            background: #111;
+            color: white;
+
+            text-decoration: none;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            margin-top: 5px;
+        }
+
+        .logout-button:hover {
+            background: #333;
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 30px auto;
+        }
+
+
+        /* =====================================================
+           MAIN AI PREDICTION
+        ===================================================== */
+
+        .prediction {
+            background: #171717;
+            color: white;
+
+            padding: 35px;
+
+            border-radius: 16px;
+
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        .prediction h1 {
+            font-size: 46px;
+            margin: 10px;
+        }
+
+        .prediction p {
+            font-size: 17px;
+        }
+
+        .ai-label {
+            color: #aaa;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+
+        /* =====================================================
+           CARDS
+        ===================================================== */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: white;
+
+            padding: 24px;
+
+            border-radius: 13px;
+
+            text-align: center;
+
+            box-shadow: 0 3px 12px #ddd;
+
+            text-decoration: none;
+
+            color: #222;
+
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px #ccc;
+        }
+
+        .card h3 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            margin: 5px;
+            font-size: 25px;
+        }
+
+        .click {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #777;
+        }
+
+
+        /* =====================================================
+           INFO
+        ===================================================== */
+
+        .info {
+            margin-top: 18px;
+
+            padding: 15px;
+
+            background: #eef2f7;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            color: #555;
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        .section {
+            background: white;
+
+            margin-top: 25px;
+
+            padding: 28px;
+
+            border-radius: 13px;
+
+            box-shadow: 0 3px 12px #ddd;
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: #666;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           WEEKLY FORECAST
+        ===================================================== */
+
+        .forecast {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+        .forecast-card {
+            background: #f5f6f8;
+
+            padding: 22px;
+
+            text-align: center;
+
+            border-radius: 10px;
+        }
+
+        .forecast-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .forecast-card h2 {
+            margin-bottom: 0;
+        }
+
+
+        /* =====================================================
+           LONG TERM FORECAST
+        ===================================================== */
+
+        .long-term {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .long-card {
+            background: #f7f7f7;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            text-align: center;
+        }
+
+        .long-card h3 {
+            color: #555;
+        }
+
+        .long-card h2 {
+            font-size: 26px;
+            margin: 10px 0;
+        }
+
+        .long-card p {
+            color: #777;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           INFLATION
+        ===================================================== */
+
+        .inflation-box {
+            background: #faf7f0;
+
+            border-left: 5px solid #c58b2a;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            margin-top: 20px;
+        }
+
+        .inflation-grid {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+        .inflation-card {
+            background: #f8f5ee;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            text-align: center;
+
+            border: 1px solid #eee4d2;
+        }
+
+        .inflation-card h3 {
+            color: #66583f;
+            font-size: 15px;
+        }
+
+        .inflation-card h2 {
+            margin: 10px 0;
+            font-size: 25px;
+        }
+
+        .inflation-card p {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .inflation-rate {
+            font-size: 38px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+
+        .inflation-impact {
+            background: #fff4d6;
+
+            border-left: 5px solid #d99a00;
+
+            padding: 18px;
+
+            border-radius: 8px;
+
+            margin-top: 18px;
+
+            line-height: 1.6;
+        }
+
+        .purchasing-power {
+            background: #eef4ff;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin-top: 18px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #f1f1f1;
+
+            text-align: left;
+        }
+
+        .category-link {
+            color: #222;
+
+            font-weight: bold;
+
+            text-decoration: none;
+        }
+
+        .category-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           WARNING
+        ===================================================== */
+
+        .warning {
+            background: #fff4d6;
+
+            padding: 18px;
+
+            border-left: 5px solid #d99a00;
+
+            border-radius: 8px;
+        }
+
+
+        /* =====================================================
+           HEALTH
+        ===================================================== */
+
+        .health-box {
+            background: #f4f7fb;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        .health-score {
+            font-size: 42px;
+
+            font-weight: bold;
+
+            margin: 10px;
+        }
+
+        .health-status {
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .health-message {
+            color: #555;
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           AI INSIGHT
+        ===================================================== */
+
+        .insight {
+            background: #eef4ff;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================================
+           CHARTS
+        ===================================================== */
+
+        .chart {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+
+        /* =====================================================
+           UPLOAD BUTTON
+        ===================================================== */
+
+        .upload-btn {
+            display: block;
+
+            width: fit-content;
+
+            margin: 30px auto;
+
+            padding: 13px 28px;
+
+            background: #111;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+        }
+
+        .upload-btn:hover {
+            background: #333;
+        }
+
+
+        /* =====================================================
+           CHATBOT
+        ===================================================== */
+
+        .chatbot-button {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            width: 62px;
+            height: 62px;
+
+            border-radius: 50%;
+
+            background: #111;
+
+            color: white;
+
+            border: none;
+
+            font-size: 27px;
+
+            cursor: pointer;
+
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+
+            z-index: 9999;
+
+            transition: 0.2s;
+        }
+
+        .chatbot-button:hover {
+            transform: scale(1.08);
+            background: #333;
+        }
+
+        .chatbot {
+            position: fixed;
+
+            right: 25px;
+            bottom: 100px;
+
+            width: 370px;
+            height: 520px;
+
+            background: white;
+
+            border-radius: 16px;
+
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+
+            display: none;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+            z-index: 9998;
+        }
+
+        .chatbot.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: #111;
+
+            color: white;
+
+            padding: 18px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .chat-subtitle {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        .chat-close {
+            background: transparent;
+
+            border: none;
+
+            color: white;
+
+            font-size: 22px;
+
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+
+            padding: 16px;
+
+            overflow-y: auto;
+
+            background: #f7f8fa;
+        }
+
+        .message {
+            margin-bottom: 13px;
+
+            display: flex;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 82%;
+
+            padding: 11px 14px;
+
+            border-radius: 13px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            word-wrap: break-word;
+        }
+
+        .message.bot .message-content {
+            background: white;
+
+            color: #222;
+
+            border: 1px solid #e1e1e1;
+
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .message-content {
+            background: #111;
+
+            color: white;
+
+            border-bottom-right-radius: 4px;
+        }
+
+        .quick-questions {
+            padding: 10px 12px;
+
+            background: white;
+
+            border-top: 1px solid #eee;
+        }
+
+        .quick-title {
+            font-size: 11px;
+
+            color: #777;
+
+            margin-bottom: 7px;
+        }
+
+        .quick-buttons {
+            display: flex;
+
+            gap: 6px;
+
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            border: 1px solid #ddd;
+
+            background: #f7f7f7;
+
+            border-radius: 15px;
+
+            padding: 6px 9px;
+
+            font-size: 10px;
+
+            cursor: pointer;
+
+            color: #444;
+        }
+
+        .quick-btn:hover {
+            background: #eee;
+        }
+
+        .chat-input-area {
+            display: flex;
+
+            padding: 10px;
+
+            background: white;
+
+            border-top: 1px solid #ddd;
+
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+
+            border: 1px solid #ccc;
+
+            border-radius: 20px;
+
+            padding: 10px 14px;
+
+            outline: none;
+
+            font-size: 13px;
+        }
+
+        .chat-input:focus {
+            border-color: #777;
+        }
+
+        .chat-send {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            border: none;
+
+            background: #111;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 17px;
+        }
+
+        .chat-send:hover {
+            background: #333;
+        }
+
+        .chat-send:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        .typing {
+            display: none;
+
+            padding: 8px 14px;
+
+            font-size: 11px;
+
+            color: #777;
+
+            background: white;
+
+            border-radius: 12px;
+
+            width: fit-content;
+
+            margin-bottom: 10px;
+        }
+
+        .typing.active {
+            display: block;
+        }
+
+        .chat-disclaimer {
+            padding: 7px 12px;
+
+            text-align: center;
+
+            font-size: 9px;
+
+            color: #999;
+
+            background: white;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media(max-width: 1000px) {
+
+            .inflation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .forecast {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .long-term {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width: 700px) {
+
+            header {
+                padding: 20px 15px 75px;
+            }
+
+            .profile-wrapper {
+                right: 15px;
+                top: auto;
+                bottom: 12px;
+            }
+
+            .welcome-text {
+                display: none;
+            }
+
+            .profile-dropdown {
+                right: 0;
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .forecast {
+                grid-template-columns: 1fr;
+            }
+
+            .inflation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prediction h1 {
+                font-size: 36px;
+            }
+
+            .chatbot {
+                right: 10px;
+
+                bottom: 85px;
+
+                width: calc(100% - 20px);
+
+                height: 70vh;
+            }
+
+            .chatbot-button {
+                right: 15px;
+                bottom: 15px;
+            }
+
+        }
+
+    </style>
+
+</head> 
+<script src="{{ url_for('static', filename='js/ui-polish.js') }}"></script>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER + PROFILE
+===================================================== -->
+
+<header>
+
+    <div class="header-content">
+
+        <h1>SterliFlux</h1>
+
+        <p>
+            AI-Powered Personal Financial Analysis
+        </p>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-wrapper">
+
+        <button
+            class="profile-button"
+            id="profileButton"
+            onclick="toggleProfile()"
+            type="button"
+        >
+
+            <div class="welcome-text">
+
+                <div class="welcome-label">
+                    Welcome,
+                </div>
+
+                <div class="welcome-name">
+                    {{ session.get('username', session.get('name', 'User')) }}
+                </div>
+
+            </div>
+
+
+            <div class="profile-icon">
+
+                {{ session.get('username', session.get('name', 'U'))[0]|upper }}
+
+            </div>
+
+        </button>
+
+
+        <!-- PROFILE DROPDOWN -->
+
+        <div
+            class="profile-dropdown"
+            id="profileDropdown"
+        >
+
+            <div class="profile-header">
+
+                <div class="profile-header-icon">
+
+                    {{ session.get('username', session.get('name', 'U'))[0]|upper }}
+
+                </div>
+
+
+                <div>
+
+                    <div class="profile-header-name">
+
+                        {{ session.get('username', session.get('name', 'User')) }}
+
+                    </div>
+
+                    <div class="profile-header-email">
+
+                        {{ session.get('email', 'Email not available') }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-details">
+
+                <div class="profile-detail">
+
+                    <span class="profile-detail-label">
+                        Username
+                    </span>
+
+                    <span class="profile-detail-value">
+
+                        {{ session.get('username', session.get('name', 'User')) }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="profile-detail">
+
+                    <span class="profile-detail-label">
+                        Email
+                    </span>
+
+                    <span class="profile-detail-value">
+
+                        {{ session.get('email', 'Not available') }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="profile-detail">
+
+                    <span class="profile-detail-label">
+                        Account Created
+                    </span>
+
+                    <span class="profile-detail-value">
+
+                        {{ session.get(
+                            'account_created',
+                            session.get(
+                                'created_at',
+                                'Not available'
+                            )
+                        ) }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGOUT ONLY INSIDE PROFILE -->
+
+            <a
+                href="/logout"
+                class="logout-button"
+            >
+                Log Out
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- =================================================
+         AI NEXT EXPENSE
+    ================================================== -->
+
+    <div class="prediction">
+
+        <div class="ai-label">
+            AI PREDICTION
+        </div>
+
+        <p>
+            Predicted Next Expense
+        </p>
+
+        <h1>
+            ₹{{ prediction }}
+        </h1>
+
+        <p>
+
+            Expected Category:
+
+            <b>
+                {{ predicted_category }}
+            </b>
+
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         MAIN DASHBOARD
+    ================================================== -->
+
+    <div class="cards">
+
+
+        <a href="/details/total" class="card">
+
+            <h3>Total Spending</h3>
+
+            <h2>
+                ₹{{ total }}
+            </h2>
+
+            <div class="click">
+                Click to know more
+            </div>
+
+        </a>
+
+
+        <a href="/details/average" class="card">
+
+            <h3>Average Expense</h3>
+
+            <h2>
+                ₹{{ average }}
+            </h2>
+
+            <div class="click">
+                Click to know more
+            </div>
+
+        </a>
+
+
+        <a href="/details/highest" class="card">
+
+            <h3>Highest Expense</h3>
+
+            <h2>
+                ₹{{ highest }}
+            </h2>
+
+            <div class="click">
+                Click to know more
+            </div>
+
+        </a>
+
+
+        <a
+            href="/details/category-{{ predicted_category }}"
+            class="card"
+        >
+
+            <h3>
+                Top Spending Category
+            </h3>
+
+            <h2>
+                {{ top_category }}
+            </h2>
+
+            <div class="click">
+                Click to know more
+            </div>
+
+        </a>
+
+
+        <a
+            href="/details/financial-health"
+            class="card"
+        >
+
+            <h3>
+                Financial Health
+            </h3>
+
+            <h2>
+                {{ score }}/100
+            </h2>
+
+            <div class="click">
+                Click to understand your score
+            </div>
+
+        </a>
+
+
+        <div class="card">
+
+            <h3>
+                Records Analyzed
+            </h3>
+
+            <h2>
+                {{ records }}
+            </h2>
+
+            <div class="click">
+                Transactions analyzed by SterliFlux
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Monthly Income
+            </h3>
+
+            <h2>
+                ₹{{ income }}
+            </h2>
+
+            <div class="click">
+                Income used for prediction
+            </div>
+
+        </div>
+
+
+        <a
+            href="/details/monthly"
+            class="card"
+        >
+
+            <h3>
+                Next Month Expense
+            </h3>
+
+            <h2>
+                ₹{{ next_month_expense }}
+            </h2>
+
+            <div class="click">
+                Click to know more
+            </div>
+
+        </a>
+
+
+        <a
+            href="/details/savings"
+            class="card"
+        >
+
+            <h3>
+                Expected Savings
+            </h3>
+
+            <h2>
+                ₹{{ predicted_savings }}
+            </h2>
+
+            <div class="click">
+                Click to know more
+            </div>
+
+        </a>
+
+
+    </div>
+
+
+    <div class="info">
+
+        ⓘ Click any highlighted dashboard card to know more
+        about your financial analysis.
+
+    </div>
+
+
+    <!-- =================================================
+         INFLATION ANALYSIS
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Inflation-Aware Financial Forecast
+        </h2>
+
+        <p class="subtitle">
+
+            SterliFlux now considers inflation when estimating
+            your future expenses. This helps show how rising
+            prices may affect your future spending and savings.
+
+        </p>
+
+
+        <div class="inflation-box">
+
+            <h3>
+                Current Inflation Assumption
+            </h3>
+
+            <div class="inflation-rate">
+
+                {{ inflation_rate|default(6) }}%
+
+            </div>
+
+            <p>
+
+                Estimated annual inflation rate used by
+                SterliFlux for future financial projections.
+
+            </p>
+
+        </div>
+
+
+        <div class="inflation-grid">
+
+
+            <div class="inflation-card">
+
+                <h3>
+                    Next Month
+                </h3>
+
+                <h2>
+
+                    ₹{{ inflation_adjusted_next_month|default(next_month_expense) }}
+
+                </h2>
+
+                <p>
+                    Inflation-adjusted expected expense
+                </p>
+
+            </div>
+
+
+            <div class="inflation-card">
+
+                <h3>
+                    Next 6 Months
+                </h3>
+
+                <h2>
+
+                    ₹{{ inflation_adjusted_6_month|default(six_month_expense) }}
+
+                </h2>
+
+                <p>
+                    Inflation-adjusted cumulative expense
+                </p>
+
+            </div>
+
+
+            <div class="inflation-card">
+
+                <h3>
+                    Next 1 Year
+                </h3>
+
+                <h2>
+
+                    ₹{{ inflation_adjusted_1_year|default(one_year_expense) }}
+
+                </h2>
+
+                <p>
+                    Projected expense after inflation
+                </p>
+
+            </div>
+
+
+            <div class="inflation-card">
+
+                <h3>
+                    Following Year
+                </h3>
+
+                <h2>
+
+                    ₹{{ inflation_adjusted_next_year|default(next_year_expense) }}
+
+                </h2>
+
+                <p>
+                    Long-term inflation-adjusted projection
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="inflation-impact">
+
+            <b>Inflation Impact:</b>
+
+            Based on the assumed inflation rate, your future
+            expenses may increase by approximately
+
+            <b>
+                ₹{{ inflation_impact|default(0) }}
+            </b>
+
+            compared with a forecast that does not account
+            for inflation.
+
+        </div>
+
+
+        <div class="purchasing-power">
+
+            <h3>
+                Purchasing Power Insight
+            </h3>
+
+            <p>
+
+                {{ inflation_message|default(
+                "Inflation means that the same amount of money may buy fewer goods and services in the future. SterliFlux includes inflation in long-term projections so that your future spending and savings estimates are more realistic."
+                ) }}
+
+            </p>
+
+        </div>
+
+
+        <div class="info">
+
+            ⓘ Inflation-adjusted values are estimates and
+            depend on the inflation assumption used by the model.
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         WEEKLY FORECAST
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            AI Next-Month Expense Forecast
+        </h2>
+
+        <p class="subtitle">
+
+            SterliFlux uses your historical spending pattern
+            and machine-learning model to estimate your
+            upcoming expenses week by week.
+
+            These values are tentative predictions.
+
+        </p>
+
+
+        <div class="forecast">
+
+
+            <div class="forecast-card">
+
+                <h3>
+                    1st Week
+                </h3>
+
+                <h2>
+                    ₹{{ week1 }}
+                </h2>
+
+                <p>
+                    Days 1–7
+                </p>
+
+            </div>
+
+
+            <div class="forecast-card">
+
+                <h3>
+                    2nd Week
+                </h3>
+
+                <h2>
+                    ₹{{ week2 }}
+                </h2>
+
+                <p>
+                    Days 8–14
+                </p>
+
+            </div>
+
+
+            <div class="forecast-card">
+
+                <h3>
+                    3rd Week
+                </h3>
+
+                <h2>
+                    ₹{{ week3 }}
+                </h2>
+
+                <p>
+                    Days 15–21
+                </p>
+
+            </div>
+
+
+            <div class="forecast-card">
+
+                <h3>
+                    4th Week
+                </h3>
+
+                <h2>
+                    ₹{{ week4 }}
+                </h2>
+
+                <p>
+                    Days 22–28
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="info">
+
+            ⓘ Weekly values are AI-generated estimates based
+            on the spending pattern found in your uploaded CSV.
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         LONG TERM FORECAST
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Long-Term AI Expense Forecast
+        </h2>
+
+        <p class="subtitle">
+
+            SterliFlux projects your spending pattern into
+            the future to estimate cumulative expenses and
+            potential savings.
+
+        </p>
+
+
+        <div class="long-term">
+
+
+            <div class="long-card">
+
+                <h3>
+                    Next 1 Month
+                </h3>
+
+                <h2>
+                    ₹{{ next_month_expense }}
+                </h2>
+
+                <p>
+                    Estimated cumulative expense
+                </p>
+
+            </div>
+
+
+            <div class="long-card">
+
+                <h3>
+                    Next 6 Months
+                </h3>
+
+                <h2>
+                    ₹{{ six_month_expense }}
+                </h2>
+
+                <p>
+                    Cumulative predicted expense
+                </p>
+
+            </div>
+
+
+            <div class="long-card">
+
+                <h3>
+                    Next 1 Year
+                </h3>
+
+                <h2>
+                    ₹{{ one_year_expense }}
+                </h2>
+
+                <p>
+                    Cumulative predicted expense
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="info">
+
+            ⓘ Long-term predictions are estimates based on
+            your current historical spending pattern.
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         NEXT YEAR
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Next-Year AI Projection
+        </h2>
+
+        <p class="subtitle">
+
+            Based on the current spending trend, SterliFlux
+            estimates your expense pattern for the following
+            year as well.
+
+        </p>
+
+
+        <div class="long-term">
+
+
+            <div class="long-card">
+
+                <h3>
+                    Next 12 Months
+                </h3>
+
+                <h2>
+                    ₹{{ one_year_expense }}
+                </h2>
+
+                <p>
+                    Current-year cumulative projection
+                </p>
+
+            </div>
+
+
+            <div class="long-card">
+
+                <h3>
+                    Following Year
+                </h3>
+
+                <h2>
+                    ₹{{ next_year_expense }}
+                </h2>
+
+                <p>
+                    Estimated expense for the year after
+                </p>
+
+            </div>
+
+
+            <div class="long-card">
+
+                <h3>
+                    Following Year Savings
+                </h3>
+
+                <h2>
+                    ₹{{ next_year_savings }}
+                </h2>
+
+                <p>
+                    Estimated income minus projected expenses
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         HISTORICAL TREND
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Historical Expense Trend
+        </h2>
+
+        <p class="subtitle">
+
+            This chart shows the expense pattern detected
+            from your uploaded CSV.
+
+        </p>
+
+        <div class="chart">
+
+            {{ trend_chart | safe }}
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CATEGORY ANALYSIS
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Category Analysis
+        </h2>
+
+        <p class="subtitle">
+
+            SterliFlux analyzes each spending category and
+            estimates its contribution to your next month's
+            expenses.
+
+            Click a category to view its detailed explanation.
+
+        </p>
+
+
+        <table>
+
+            <tr>
+
+                <th>
+                    Category
+                </th>
+
+                <th>
+                    Historical Spending
+                </th>
+
+                <th>
+                    Predicted Next Month
+                </th>
+
+                <th>
+                    Spending Share
+                </th>
+
+            </tr>
+
+
+            {% for item in category_predictions %}
+
+            <tr>
+
+                <td>
+
+                    <a
+                        class="category-link"
+                        href="/details/category-{{ item.category }}"
+                    >
+
+                        {{ item.category }}
+
+                    </a>
+
+                </td>
+
+
+                <td>
+                    ₹{{ item.total }}
+                </td>
+
+
+                <td>
+                    ₹{{ item.prediction }}
+                </td>
+
+
+                <td>
+                    {{ item.percentage }}%
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+
+        <div class="info">
+
+            ⓘ Click any category above to understand
+            your spending behaviour and prediction.
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CATEGORY CHART
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Spending by Category
+        </h2>
+
+        <div class="chart">
+
+            {{ category_chart | safe }}
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         FINANCIAL HEALTH
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Financial Health
+        </h2>
+
+
+        <div class="health-box">
+
+            <div class="health-score">
+
+                {{ score }}/100
+
+            </div>
+
+
+            <div class="health-status">
+
+                {{ health_status }}
+
+            </div>
+
+
+            <p class="health-message">
+
+                Your financial health score is calculated
+                using your projected expense-to-income ratio,
+                expected savings, and future financial pressure.
+
+            </p>
+
+
+            <p>
+                {{ health_message }}
+            </p>
+
+        </div>
+
+
+        <div class="info">
+
+            ⓘ Click the Financial Health card above to
+            view a detailed explanation of your score.
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         SPENDING WARNING
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            Spending Alert
+        </h2>
+
+
+        <div class="warning">
+
+            {{ spending_warning }}
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         AI FINANCIAL INSIGHT
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            AI Financial Insight
+        </h2>
+
+
+        <div class="insight">
+
+            {{ insight }}
+
+        </div>
+
+
+        <div class="info">
+
+            ⓘ This insight is generated from the spending
+            patterns detected in your uploaded financial data.
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         HOW AI WORKS
+    ================================================== -->
+
+    <div class="section">
+
+        <h2>
+            How SterliFlux AI Works
+        </h2>
+
+
+        <p class="subtitle">
+
+            SterliFlux processes your historical transactions,
+            extracts time-based spending patterns, considers
+            inflation for future projections, and uses a
+            machine-learning model to estimate future expenses.
+
+        </p>
+
+
+        <div class="info">
+
+            Historical CSV
+
+            →
+
+            Data Processing
+
+            →
+
+            Feature Extraction
+
+            →
+
+            Machine Learning
+
+            →
+
+            Inflation Adjustment
+
+            →
+
+            Expense Prediction
+
+            →
+
+            Category Analysis
+
+            →
+
+            Financial Insights
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         UPLOAD AGAIN
+    ================================================== -->
+
+    <a
+        href="/"
+        class="upload-btn"
+    >
+
+        Upload Another CSV
+
+    </a>
+
+
+</div>
+
+
+<!-- =====================================================
+     CHATBOT BUTTON
+===================================================== -->
+
+<button
+    class="chatbot-button"
+    id="chatbotButton"
+    onclick="toggleChat()"
+    title="Ask SterliFlux AI"
+    type="button"
+>
+
+    💬
+
+</button>
+
+
+<!-- =====================================================
+     CHATBOT WINDOW
+===================================================== -->
+
+<div
+    class="chatbot"
+    id="chatbot"
+>
+
+
+    <div class="chat-header">
+
+        <div>
+
+            <div class="chat-title">
+                SterliFlux AI Advisor
+            </div>
+
+            <div class="chat-subtitle">
+                Your personal financial analysis assistant
+            </div>
+
+        </div>
+
+
+        <button
+            class="chat-close"
+            onclick="toggleChat()"
+            type="button"
+        >
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="chat-messages"
+        id="chatMessages"
+    >
+
+
+        <div class="message bot">
+
+            <div class="message-content">
+
+                Hi! I'm your SterliFlux AI financial advisor.
+
+                <br><br>
+
+                You can ask me things like:
+
+                <br>
+
+                • Can I afford a house next month?
+
+                <br>
+
+                • How much can I save?
+
+                <br>
+
+                • Am I spending too much?
+
+                <br>
+
+                • Which category should I reduce?
+
+                <br>
+
+                • How will inflation affect my expenses?
+
+                <br>
+
+                • What will my expenses look like next year?
+
+                <br>
+
+                • Can I afford a ₹50,000 purchase?
+
+                <br><br>
+
+                I'll use the financial analysis from your
+                uploaded CSV to answer.
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="typing"
+            id="typing"
+        >
+
+            SterliFlux AI is thinking...
+
+        </div>
+
+
+    </div>
+
+
+    <div class="quick-questions">
+
+        <div class="quick-title">
+            Try asking:
+        </div>
+
+
+        <div class="quick-buttons">
+
+
+            <button
+                class="quick-btn"
+                onclick="askQuickQuestion('Can I afford a house next month?')"
+                type="button"
+            >
+
+                Can I buy a house?
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askQuickQuestion('How much can I save next month?')"
+                type="button"
+            >
+
+                How much can I save?
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askQuickQuestion('Am I spending too much?')"
+                type="button"
+            >
+
+                Am I overspending?
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askQuickQuestion('How will inflation affect my future expenses?')"
+                type="button"
+            >
+
+                Inflation impact?
+
+            </button>
+
+
+            <button
+                class="quick-btn"
+                onclick="askQuickQuestion('Which spending category should I reduce?')"
+                type="button"
+            >
+
+                Reduce spending?
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="chat-input-area">
+
+        <input
+            type="text"
+            id="chatInput"
+            class="chat-input"
+            placeholder="Ask about your finances..."
+            autocomplete="off"
+        >
+
+
+        <button
+            id="chatSend"
+            class="chat-send"
+            onclick="sendMessage()"
+            type="button"
+        >
+
+            ➤
+
+        </button>
+
+    </div>
+
+
+    <div class="chat-disclaimer">
+
+        SterliFlux provides AI-based estimates, not professional
+        financial advice.
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+    /* =====================================================
+       PROFILE DROPDOWN
+    ===================================================== */
+
+    function toggleProfile() {
+
+        const dropdown =
+            document.getElementById("profileDropdown");
+
+        dropdown.classList.toggle("active");
+
+    }
+
+
+    /*
+       Close profile when clicking outside
+    */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            const wrapper =
+                document.querySelector(".profile-wrapper");
+
+            const dropdown =
+                document.getElementById("profileDropdown");
+
+            if (
+                wrapper &&
+                !wrapper.contains(event.target)
+            ) {
+
+                dropdown.classList.remove("active");
+
+            }
+
+        }
+    );
+
+
+    /*
+       Close profile with Escape
+    */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Escape") {
+
+                document
+                    .getElementById("profileDropdown")
+                    .classList.remove("active");
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       OPEN / CLOSE CHAT
+    ===================================================== */
+
+    function toggleChat() {
+
+        const chat =
+            document.getElementById("chatbot");
+
+        chat.classList.toggle("active");
+
+
+        if (
+            chat.classList.contains("active")
+        ) {
+
+            setTimeout(
+                function() {
+
+                    document
+                        .getElementById("chatInput")
+                        .focus();
+
+                },
+                100
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ADD MESSAGE
+    ===================================================== */
+
+    function addMessage(
+        message,
+        sender
+    ) {
+
+        const messages =
+            document.getElementById(
+                "chatMessages"
+            );
+
+
+        const messageDiv =
+            document.createElement("div");
+
+
+        messageDiv.className =
+            "message " + sender;
+
+
+        const content =
+            document.createElement("div");
+
+
+        content.className =
+            "message-content";
+
+
+        content.innerHTML =
+            escapeHtml(message)
+                .replace(/\n/g, "<br>");
+
+
+        messageDiv.appendChild(
+            content
+        );
+
+
+        const typing =
+            document.getElementById(
+                "typing"
+            );
+
+
+        messages.insertBefore(
+            messageDiv,
+            typing
+        );
+
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+    }
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =====================================================
+       QUICK QUESTION
+    ===================================================== */
+
+    function askQuickQuestion(
+        question
+    ) {
+
+        document
+            .getElementById("chatInput")
+            .value = question;
+
+        sendMessage();
+
+    }
+
+
+    /* =====================================================
+       SEND MESSAGE
+    ===================================================== */
+
+    async function sendMessage() {
+
+        const input =
+            document.getElementById(
+                "chatInput"
+            );
+
+
+        const sendButton =
+            document.getElementById(
+                "chatSend"
+            );
+
+
+        const typing =
+            document.getElementById(
+                "typing"
+            );
+
+
+        const question =
+            input.value.trim();
+
+
+        if (!question) {
+            return;
+        }
+
+
+        addMessage(
+            question,
+            "user"
+        );
+
+
+        input.value = "";
+
+
+        sendButton.disabled = true;
+
+        typing.classList.add(
+            "active"
+        );
+
+
+        const messages =
+            document.getElementById(
+                "chatMessages"
+            );
+
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/chat",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            question:
+                                question
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            typing.classList.remove(
+                "active"
+            );
+
+
+            /* =================================================
+               FIXED: Flask /chat returns {"reply": ...}
+               ================================================= */
+
+            if (
+                data.reply
+            ) {
+
+                addMessage(
+                    data.reply,
+                    "bot"
+                );
+
+            }
+
+            else if (
+                data.error
+            ) {
+
+                addMessage(
+                    "Sorry, I couldn't process that question. "
+                    + data.error,
+                    "bot"
+                );
+
+            }
+
+            else {
+
+                addMessage(
+                    "Sorry, I couldn't generate an answer right now.",
+                    "bot"
+                );
+
+            }
+
+
+        }
+
+        catch (error) {
+
+            typing.classList.remove(
+                "active"
+            );
+
+
+            addMessage(
+                "I couldn't connect to the SterliFlux AI engine. "
+                + "Please make sure the Flask server is running.",
+                "bot"
+            );
+
+
+            console.error(
+                error
+            );
+
+        }
+
+
+        sendButton.disabled = false;
+
+        input.focus();
+
+    }
+
+
+    /* =====================================================
+       ENTER KEY
+    ===================================================== */
+
+    document
+        .getElementById("chatInput")
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter"
+                    &&
+                    !event.shiftKey
+                ) {
+
+                    event.preventDefault();
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+
+</script>
+
+
+</body>
+
+</html>

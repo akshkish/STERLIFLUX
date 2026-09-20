@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>SterliFlux - Login</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        /* ==============================
+           LOGIN BOX
+        ============================== */
+
+        .box {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* ==============================
+           LOGO
+        ============================== */
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* ==============================
+           FLASH MESSAGES
+        ============================== */
+
+        .message {
+            padding: 11px 13px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #b00020;
+        }
+
+        .success {
+            background: #e5f7e9;
+            color: #176b2c;
+        }
+
+        .warning {
+            background: #fff4d6;
+            color: #8a6500;
+        }
+
+        .info {
+            background: #e5f0ff;
+            color: #174a8b;
+        }
+
+        /* ==============================
+           FORM
+        ============================== */
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #111;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ==============================
+           LOGIN BUTTON
+        ============================== */
+
+        button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #111;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        /* ==============================
+           REGISTER
+        ============================== */
+
+        .register {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .register a {
+            color: #111;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+        /* ==============================
+           SECURITY MESSAGE
+        ============================== */
+
+        .security {
+            margin-top: 25px;
+            padding: 12px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 500px) {
+
+            .box {
+                padding: 30px 25px;
+            }
+
+            .logo {
+                font-size: 27px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+    <!-- ==============================
+         LOGO
+    ============================== -->
+
+    <div class="logo">
+        SterliFlux
+    </div>
+
+    <div class="subtitle">
+        AI-Powered Personal Financial Advisor
+    </div>
+
+
+    <!-- ==============================
+         FLASH MESSAGES
+    ============================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- ==============================
+         LOGIN FORM
+    ============================== -->
+
+    <form
+        method="POST"
+        action="{{ url_for('login') }}"
+    >
+
+
+        <div class="input-group">
+
+            <label for="email">
+                Email
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+                required
+            >
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button type="submit">
+            Login
+        </button>
+
+
+    </form>
+
+
+    <!-- ==============================
+         REGISTER LINK
+    ============================== -->
+
+    <div class="register">
+
+        Don't have an account?
+
+        <a href="{{ url_for('register') }}">
+            Create Account
+        </a>
+
+    </div>
+
+
+    <!-- ==============================
+         SECURITY INFORMATION
+    ============================== -->
+
+    <div class="security">
+
+        Your account is protected with
+        secure password authentication.
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

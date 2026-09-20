@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>SterliFlux - {{ title }}</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: #111;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header p {
+            color: #ccc;
+            margin-bottom: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 35px auto;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px #ddd;
+            margin-bottom: 20px;
+        }
+
+        .box h2 {
+            margin-top: 0;
+        }
+
+        .big-number {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .stat {
+            background: #f5f5f5;
+            padding: 18px;
+            border-radius: 10px;
+            margin: 12px 0;
+        }
+
+        .stat b {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           INFLATION
+        ========================= */
+
+        .inflation-box {
+            background: #fff8e6;
+            border-left: 5px solid #d99a00;
+            padding: 22px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .inflation-box h2 {
+            margin-top: 0;
+        }
+
+        .inflation-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 15px;
+        }
+
+        .inflation-stat {
+            background: white;
+            padding: 17px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .inflation-stat b {
+            display: block;
+            margin-bottom: 7px;
+            color: #555;
+        }
+
+        .inflation-value {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .inflation-explanation {
+            margin-top: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .adjusted-box {
+            background: #eef4ff;
+            border-left: 5px solid #4477cc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 18px;
+        }
+
+        .adjusted-box h3 {
+            margin-top: 0;
+        }
+
+        .adjusted-number {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* =========================
+           STATUS BOXES
+        ========================= */
+
+        .good {
+            background: #eaf7ea;
+            border-left: 5px solid #3c8c3c;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .warning {
+            background: #fff4d6;
+            border-left: 5px solid #d99a00;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .danger {
+            background: #ffe7e7;
+            border-left: 5px solid #c33;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back {
+            display: inline-block;
+            padding: 12px 22px;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .back:hover {
+            background: #333;
+        }
+
+        /* =========================
+           INFO
+        ========================= */
+
+        .info {
+            background: #eef2f7;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: #555;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width: 600px) {
+
+            .container {
+                width: 94%;
+            }
+
+            .box {
+                padding: 22px;
+            }
+
+            .inflation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .big-number {
+                font-size: 34px;
+            }
+
+        }
+
+    </style>
+
+</head> 
+<script src="{{ url_for('static', filename='js/ui-polish.js') }}"></script>
+
+
+<body>
+
+
+<header>
+
+    <h1>SterliFlux</h1>
+
+    <p>
+        {{ title }}
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- =====================================================
+         CATEGORY PAGE
+    ====================================================== -->
+
+    {% if type == "category" %}
+
+
+    <!-- CATEGORY OVERVIEW -->
+
+    <div class="box">
+
+        <h2>
+            {{ category.category }} Analysis
+        </h2>
+
+        <p>
+
+            SterliFlux analyzed your historical spending
+            in this category and estimated its future
+            contribution to your expenses.
+
+        </p>
+
+
+        <div class="stat">
+
+            <b>
+                Historical Spending
+            </b>
+
+            <div class="stat-value">
+                ₹{{ category.total }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Number of Transactions
+            </b>
+
+            <div class="stat-value">
+                {{ category.count }}
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Share of Total Spending
+            </b>
+
+            <div class="stat-value">
+                {{ category.percentage }}%
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Predicted Next-Month Spending
+            </b>
+
+            <div class="stat-value">
+                ₹{{ category.prediction }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         INFLATION ANALYSIS
+    ====================================================== -->
+
+    <div class="box">
+
+        <div class="inflation-box">
+
+            <h2>
+                Inflation Impact on {{ category.category }}
+            </h2>
+
+            <p>
+
+                Inflation can increase the future cost of
+                goods and services in this spending category.
+                SterliFlux applies the configured estimated
+                category inflation rate to show its possible
+                effect on your next-month spending.
+
+            </p>
+
+
+            <div class="inflation-grid">
+
+
+                <!-- ANNUAL INFLATION -->
+
+                <div class="inflation-stat">
+
+                    <b>
+                        Estimated Annual Inflation Rate
+                    </b>
+
+                    <div class="inflation-value">
+
+                        {{ category.inflation_rate|default(0) }}%
+
+                    </div>
+
+                </div>
+
+
+                <!-- MONTHLY INFLATION -->
+
+                <div class="inflation-stat">
+
+                    <b>
+                        Estimated Monthly Inflation Rate
+                    </b>
+
+                    <div class="inflation-value">
+
+                        {{ category.monthly_inflation_rate|default(0) }}%
+
+                    </div>
+
+                </div>
+
+
+                <!-- INFLATION IMPACT -->
+
+                <div class="inflation-stat">
+
+                    <b>
+                        Estimated 1-Month Inflation Impact
+                    </b>
+
+                    <div class="inflation-value">
+
+                        +₹{{ category.inflation_impact|default(0) }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- NORMAL PREDICTION -->
+
+                <div class="inflation-stat">
+
+                    <b>
+                        AI Prediction Before Inflation
+                    </b>
+
+                    <div class="inflation-value">
+
+                        ₹{{ category.prediction }}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ADJUSTED PREDICTION -->
+
+            <div class="adjusted-box">
+
+                <h3>
+                    Inflation-Adjusted Next-Month Estimate
+                </h3>
+
+                <div class="adjusted-number">
+
+                    ₹{{ category.inflation_adjusted_prediction|default(category.prediction) }}
+
+                </div>
+
+                <p>
+
+                    This estimate combines SterliFlux's
+                    predicted spending for this category with
+                    the estimated monthly inflation effect.
+
+                </p>
+
+            </div>
+
+
+            <div class="inflation-explanation">
+
+                <b>
+                    What does this mean?
+                </b>
+
+                <br><br>
+
+                SterliFlux first predicts that you may spend
+                approximately
+
+                <b>
+                    ₹{{ category.prediction }}
+                </b>
+
+                in {{ category.category }} next month.
+
+                Based on the configured estimated annual
+                inflation rate of
+
+                <b>
+                    {{ category.inflation_rate|default(0) }}%
+                </b>,
+
+                the estimated one-month inflation effect is
+                approximately
+
+                <b>
+                    ₹{{ category.inflation_impact|default(0) }}
+                </b>.
+
+                Therefore, the inflation-adjusted estimate is
+                approximately
+
+                <b>
+                    ₹{{ category.inflation_adjusted_prediction|default(category.prediction) }}
+                </b>.
+
+            </div>
+
+
+        </div>
+
+
+        <div class="info">
+
+            Note: The inflation rates used by SterliFlux are
+            configured estimated category rates. They are
+            not live government CPI values and should be
+            treated as analytical estimates.
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         AI CATEGORY INSIGHT
+    ====================================================== -->
+
+    <div class="box">
+
+        <h2>
+            AI Category Insight
+        </h2>
+
+
+        <p>
+
+            <b>
+                {{ category.category }}
+            </b>
+
+            currently represents
+
+            <b>
+                {{ category.percentage }}%
+            </b>
+
+            of your analyzed spending.
+
+        </p>
+
+
+        <p>
+
+            Based on your current spending pattern,
+            SterliFlux estimates approximately
+
+            <b>
+                ₹{{ category.prediction }}
+            </b>
+
+            may be spent in this category next month.
+
+        </p>
+
+
+        <p>
+
+            After considering the estimated inflation effect,
+            the adjusted next-month estimate is approximately
+
+            <b>
+                ₹{{ category.inflation_adjusted_prediction|default(category.prediction) }}
+            </b>.
+
+        </p>
+
+
+        {% if category.percentage > 30 %}
+
+        <div class="warning">
+
+            This category represents a significant portion
+            of your spending.
+
+            Because of its large spending share, even a small
+            increase caused by inflation could noticeably
+            affect your overall monthly expenses.
+
+        </div>
+
+        {% elif category.inflation_rate|default(0) >= 7 %}
+
+        <div class="warning">
+
+            This category has a relatively high estimated
+            inflation rate.
+
+            Monitoring price increases in this category
+            could help you control future spending.
+
+        </div>
+
+        {% else %}
+
+        <div class="good">
+
+            This category currently represents a relatively
+            smaller portion of your overall spending and has
+            a moderate estimated inflation effect.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================================
+         FINANCIAL HEALTH
+    ====================================================== -->
+
+    {% elif type == "health" %}
+
+
+    <div class="box">
+
+        <h2>
+            Financial Health Score
+        </h2>
+
+        <div class="big-number">
+
+            {{ data.score }}/100
+
+        </div>
+
+        <h2>
+            {{ data.health_status }}
+        </h2>
+
+        <p>
+
+            {{ data.health_message }}
+
+        </p>
+
+    </div>
+
+
+    <div class="box">
+
+        <h2>
+            Why did you receive this score?
+        </h2>
+
+
+        <div class="stat">
+
+            <b>
+                Monthly Income
+            </b>
+
+            ₹{{ data.income }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Predicted Monthly Expenses
+            </b>
+
+            ₹{{ data.next_month_expense }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Income Used by Predicted Expenses
+            </b>
+
+            {{ data.expense_ratio }}%
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Expected Savings
+            </b>
+
+            ₹{{ data.predicted_savings }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Expected Savings Rate
+            </b>
+
+            {{ data.savings_percentage }}%
+
+        </div>
+
+    </div>
+
+
+    <div class="box">
+
+        <h2>
+            AI Financial Health Explanation
+        </h2>
+
+
+        {% if data.score >= 80 %}
+
+        <div class="good">
+
+            Your predicted expenses are comfortably below
+            your income. Your current pattern indicates a
+            strong opportunity to maintain positive savings.
+
+        </div>
+
+        {% elif data.score >= 60 %}
+
+        <div class="good">
+
+            Your finances are generally balanced, although
+            reducing unnecessary spending could improve your
+            financial health.
+
+        </div>
+
+        {% elif data.score >= 40 %}
+
+        <div class="warning">
+
+            Your predicted expenses are relatively high
+            compared with your income.
+
+            You should monitor discretionary categories
+            carefully.
+
+        </div>
+
+        {% else %}
+
+        <div class="danger">
+
+            Your projected expenses create a significant
+            risk of overspending.
+
+            Reducing expenses should be a priority.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =====================================================
+         TOTAL
+    ====================================================== -->
+
+    {% elif type == "total" %}
+
+
+    <div class="box">
+
+        <h2>
+            Total Spending
+        </h2>
+
+        <div class="big-number">
+
+            ₹{{ data.total }}
+
+        </div>
+
+        <p>
+
+            This is the total amount spent across all
+            transactions in your uploaded CSV.
+
+        </p>
+
+        <p>
+
+            SterliFlux uses this historical spending
+            information as part of the basis for its
+            future expense predictions.
+
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         AVERAGE
+    ====================================================== -->
+
+    {% elif type == "average" %}
+
+
+    <div class="box">
+
+        <h2>
+            Average Expense
+        </h2>
+
+        <div class="big-number">
+
+            ₹{{ data.average }}
+
+        </div>
+
+        <p>
+
+            This represents the average amount spent per
+            recorded transaction.
+
+        </p>
+
+        <p>
+
+            A high average transaction value can indicate
+            that fewer but larger expenses are contributing
+            significantly to spending.
+
+        </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         HIGHEST
+    ====================================================== -->
+
+    {% elif type == "highest" %}
+
+
+    <div class="box">
+
+        <h2>
+            Highest Expense
+        </h2>
+
+        <div class="big-number">
+
+            ₹{{ data.highest }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Category
+            </b>
+
+            {{ data.highest_category }}
+
+        </div>
+
+
+        <p>
+
+            This was the largest individual transaction
+            found in your uploaded dataset.
+
+        </p>
+
+
+        <div class="warning">
+
+            Large individual expenses can have a significant
+            impact on monthly cash flow.
+
+            Monitoring unusually high transactions can help
+            prevent unexpected overspending.
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MONTHLY
+    ====================================================== -->
+
+    {% elif type == "monthly" %}
+
+
+    <div class="box">
+
+        <h2>
+            Next Month AI Forecast
+        </h2>
+
+        <div class="big-number">
+
+            ₹{{ data.next_month_expense }}
+
+        </div>
+
+        <p>
+
+            SterliFlux predicts this amount based on the
+            historical spending pattern contained in your CSV.
+
+        </p>
+
+
+        <div class="stat">
+
+            <b>
+                Current Income
+            </b>
+
+            ₹{{ data.income }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Expected Savings
+            </b>
+
+            ₹{{ data.predicted_savings }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Savings Rate
+            </b>
+
+            {{ data.savings_percentage }}%
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SIX MONTHS
+    ====================================================== -->
+
+    {% elif type == "six-months" %}
+
+
+    <div class="box">
+
+        <h2>
+            6-Month Expense Forecast
+        </h2>
+
+        <div class="big-number">
+
+            ₹{{ data.six_month_expense }}
+
+        </div>
+
+        <p>
+
+            SterliFlux estimates this as your cumulative
+            expense over the next six months based on your
+            current spending pattern.
+
+        </p>
+
+
+        <div class="stat">
+
+            <b>
+                Monthly Income
+            </b>
+
+            ₹{{ data.income }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Expected 6-Month Savings
+            </b>
+
+            ₹{{ data.six_month_savings }}
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ONE YEAR
+    ====================================================== -->
+
+    {% elif type == "one-year" %}
+
+
+    <div class="box">
+
+        <h2>
+            1-Year Expense Forecast
+        </h2>
+
+        <div class="big-number">
+
+            ₹{{ data.one_year_expense }}
+
+        </div>
+
+        <p>
+
+            SterliFlux estimates this as your cumulative
+            expense over the next twelve months.
+
+        </p>
+
+
+        <div class="stat">
+
+            <b>
+                Expected 1-Year Savings
+            </b>
+
+            ₹{{ data.one_year_savings }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Monthly Income
+            </b>
+
+            ₹{{ data.income }}
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SAVINGS
+    ====================================================== -->
+
+    {% elif type == "savings" %}
+
+
+    <div class="box">
+
+        <h2>
+            Expected Savings
+        </h2>
+
+        <div class="big-number">
+
+            ₹{{ data.predicted_savings }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Monthly Income
+            </b>
+
+            ₹{{ data.income }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Predicted Expenses
+            </b>
+
+            ₹{{ data.next_month_expense }}
+
+        </div>
+
+
+        <div class="stat">
+
+            <b>
+                Expected Savings Rate
+            </b>
+
+            {{ data.savings_percentage }}%
+
+        </div>
+
+
+        {% if data.predicted_savings > 0 %}
+
+        <div class="good">
+
+            Your current spending pattern indicates that
+            you may retain a positive amount after predicted
+            monthly expenses.
+
+        </div>
+
+        {% else %}
+
+        <div class="danger">
+
+            Your predicted expenses may exceed your current
+            income.
+
+            Reducing spending could help prevent a projected
+            deficit.
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+
+    {% endif %}
+
+
+    <!-- =====================================================
+         BACK
+    ====================================================== -->
+
+    <a href="/" class="back">
+
+        ← Upload Another CSV
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

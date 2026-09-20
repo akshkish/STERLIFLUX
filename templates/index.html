@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>SterliFlux - Dashboard</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 0;
+            color: #222;
+        }
+
+        /* =========================================
+           NAVBAR
+        ========================================= */
+
+        .navbar {
+            background: #111;
+            color: white;
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        /* =========================================
+           PROFILE BUTTON
+        ========================================= */
+
+        .profile-wrapper {
+            position: relative;
+        }
+
+        .profile-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .profile-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: white;
+            color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .profile-name {
+            font-weight: bold;
+        }
+
+        .arrow {
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .profile-button.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* =========================================
+           PROFILE DROPDOWN
+        ========================================= */
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 52px;
+            width: 280px;
+            background: white;
+            color: #222;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.20);
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .profile-dropdown.show {
+            display: block;
+        }
+
+        .profile-info {
+            padding: 20px;
+        }
+
+        .dropdown-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .dropdown-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #111;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .dropdown-name {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .dropdown-email {
+            color: #777;
+            font-size: 13px;
+            margin-top: 3px;
+            word-break: break-word;
+        }
+
+        .profile-detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+        }
+
+        .profile-detail strong {
+            color: #555;
+        }
+
+        /* =========================================
+           LOGOUT
+        ========================================= */
+
+        .logout-section {
+            border-top: 1px solid #eee;
+        }
+
+        .logout {
+            display: block;
+            padding: 14px 20px;
+            text-decoration: none;
+            color: #d63031;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .logout:hover {
+            background: #fff1f1;
+        }
+
+        /* =========================================
+           MAIN CONTAINER
+        ========================================= */
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        /* =========================================
+           UPLOAD CARD
+        ========================================= */
+
+        .box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #ddd;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="file"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button.analyze-button {
+            margin-top: 20px;
+            padding: 13px 30px;
+            border: none;
+            border-radius: 8px;
+            background: #111;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button.analyze-button:hover {
+            background: #333;
+        }
+
+        .info {
+            margin-top: 25px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .profile-name {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .box {
+                padding: 25px;
+            }
+
+            .profile-dropdown {
+                right: -5px;
+                width: 270px;
+            }
+
+        }
+
+    </style>
+
+</head> 
+<script src="{{ url_for('static', filename='js/ui-polish.js') }}"></script>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<div class="navbar">
+
+    <div class="logo">
+        SterliFlux
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-wrapper">
+
+        <button
+            type="button"
+            class="profile-button"
+            id="profileButton"
+        >
+
+            <div class="profile-icon">
+                {{ current_user.username[0]|upper }}
+            </div>
+
+            <span class="profile-name">
+                {{ current_user.username }}
+            </span>
+
+            <span class="arrow">
+                ▼
+            </span>
+
+        </button>
+
+
+        <!-- PROFILE DROPDOWN -->
+
+        <div
+            class="profile-dropdown"
+            id="profileDropdown"
+        >
+
+            <div class="profile-info">
+
+                <div class="dropdown-profile">
+
+                    <div class="dropdown-icon">
+                        {{ current_user.username[0]|upper }}
+                    </div>
+
+                    <div>
+
+                        <div class="dropdown-name">
+                            {{ current_user.username }}
+                        </div>
+
+                        <div class="dropdown-email">
+                            {{ current_user.email }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-detail">
+
+                    <strong>Username</strong>
+
+                    <span>
+                        {{ current_user.username }}
+                    </span>
+
+                </div>
+
+
+                <div class="profile-detail">
+
+                    <strong>Created</strong>
+
+                    <span>
+                        {{ current_user.created_at.strftime('%d-%m-%Y') if current_user.created_at else 'N/A' }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGOUT ONLY INSIDE PROFILE -->
+
+            <div class="logout-section">
+
+                <a
+                    href="{{ url_for('logout') }}"
+                    class="logout"
+                >
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<div class="container">
+
+
+    <div class="box">
+
+        <h1>
+            Analyze Your Finances
+        </h1>
+
+        <p class="subtitle">
+            AI-Powered Expense Prediction & Financial Analysis
+        </p>
+
+
+        <form
+            action="{{ url_for('upload') }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+
+            <div class="input-group">
+
+                <label>
+                    Upload Expense CSV
+                </label>
+
+                <input
+                    type="file"
+                    name="file"
+                    accept=".csv"
+                    required
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Monthly Income (₹)
+                </label>
+
+                <input
+                    type="number"
+                    name="income"
+                    placeholder="Example: 30000"
+                    min="0"
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="analyze-button"
+            >
+                Analyze My Finances
+            </button>
+
+
+        </form>
+
+
+        <div class="info">
+
+            Your CSV should contain:
+
+            <br><br>
+
+            <b>Date, Category, Amount</b>
+
+            <br><br>
+
+            SterliFlux will analyze your spending pattern
+            and predict your upcoming expenses, savings,
+            financial health and long-term forecasts.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     PROFILE DROPDOWN JAVASCRIPT
+========================================= -->
+
+<script>
+
+    const profileButton =
+        document.getElementById("profileButton");
+
+    const profileDropdown =
+        document.getElementById("profileDropdown");
+
+
+    profileButton.addEventListener("click", function(event) {
+
+        event.stopPropagation();
+
+        profileDropdown.classList.toggle("show");
+
+        profileButton.classList.toggle("active");
+
+    });
+
+
+    document.addEventListener("click", function(event) {
+
+        if (!event.target.closest(".profile-wrapper")) {
+
+            profileDropdown.classList.remove("show");
+
+            profileButton.classList.remove("active");
+
+        }
+
+    });
+
+</script>
+
+
+</body>
+
+</html>

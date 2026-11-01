@@ -1,4 +1,4 @@
-# SterliFlux – AI-Powered Expense Analyzer
+# SterliFlux – AI-Engineered Expense Predictor.
 
 **SterliFlux** is an AI-powered personal finance analysis platform that helps users understand their spending behaviour, forecast future expenses, and identify potential savings through Machine Learning, Natural Language Processing (NLP), and Retrieval-Augmented Generation (RAG).
 
